@@ -35,8 +35,8 @@ function backup {
 
 function restore {
   local VOLUME="$1"
-  local BUCKET="${2:-$BUCKET}"
-  local SOURCE="$SFTP_ROOT/$BUCKET/$VOLUME"
+  local SFTP_ROOT="${2:-$SFTP_ROOT}"
+  local SOURCE="$SFTP_ROOT/$VOLUME"
 
   if [ -z "$VOLUME" ]; then
     echo "Volume is required"
@@ -54,7 +54,7 @@ function restore {
   " | tail -n "1")
 
   if [ -z "$LATEST" ]; then
-    echo "$VOLUME does not have backups in $BUCKET"
+    echo "$VOLUME does not have backups in $SFTP_ROOT"
     exit 1
   fi
 
