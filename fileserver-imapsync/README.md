@@ -1,6 +1,6 @@
 # nikarh/fileserver-imapsync
 
-This is `alpine` with `imapnotify` and `mbsync`, configured specifically to backup emails from gmail using OAUTH2.
+This is `alpine` with `imapnotify` and `mbsync`, configured specifically to backup emails from Gmail using OAUTH2.
 
 ## Usage
 

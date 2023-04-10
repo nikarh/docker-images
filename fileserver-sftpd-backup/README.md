@@ -1,8 +1,8 @@
 # nikarh/fileserver-sftpd-backup
 
 This image can be used to make daily backups of your data.
-You can mount something to a `/volumes` folder. Each folder inside will be treated as a candidate for a backup, e.g. if you have `/volumes/A`, `/volumes/B` and `/volumes/C`, then `A`, `B` and `C` will be considered as separate entities.
-Each candidate for a backup will be tar-xzipped, a timestamp will be appended to a filename, and a file will be copied to SFTP server. This tool will try to keep only the latest N number of backups per candidate.
+You can mount something to a `/volumes` folder. Each folder inside will be treated as a candidate for a backup, e.g. if you have `/volumes/A`, `/volumes/B` and `/volumes/C`, then `A`, `B` and `C` will be considered separate entities.
+Each candidate for a backup will be tar-zipped, a timestamp will be appended to a filename, and a file will be copied to the SFTP server. This tool will try to keep only the latest N number of backups per candidate.
 
 ## Usage
 

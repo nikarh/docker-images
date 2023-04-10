@@ -1,4 +1,4 @@
-# nikarh/ьediafire-bulk-downloader
+# nikarh/mediafire-bulk-downloader
 
 [Mediafire bulk downloader](https://github.com/NicKoehler/mediafire_bulk_downloader) wrapped in a docker image.
 
