@@ -16,7 +16,8 @@ services:
     image: nikarh/dotfiles-sftpd-backup
     environment:
       MAXIMUM_BACKUP_NUMBER: 3 # Keep only 3 latest archives per volume
-      SFTP_SERVER: files
+      SFTP_HOST: localhost
+      SFTP_PORT: 22
       SFTP_USER: backup
       SFTP_ROOT: /data/server
     volumes:

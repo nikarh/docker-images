@@ -1,7 +1,8 @@
 #!/bin/sh -xe
 
 MAXIMUM_BACKUP_NUMBER="${MAXIMUM_BACKUP_NUMBER:-2}"
-SFTP_SERVER="${SFTP_SERVER:-files}"
+SFTP_HOST="${SFTP_HOST:-localhost}"
+SFTP_PORT="${SFTP_PORT:-22}"
 SFTP_USER="${SFTP_USER:-backup}"
 SFTP_ROOT="${SFTP_ROOT:-/data}"
 VOLUMES="${VOLUMES:-/volumes}"
@@ -18,7 +19,7 @@ function backup {
 
   local COMMANDS="$(tar -C "$VOLUMES/$VOLUME" -Jcf - . | \
     lftp -c "
-      open -p 2222 -u \"$SFTP_USER,\" \"sftp://$SFTP_SERVER\";
+      open -p $SFTP_PORT -u \"$SFTP_USER,\" \"sftp://$SFTP_HOST\";
       mkdir -pf \"$TARGET\";
       put /dev/stdin -o \"$TARGET/.$DATE.tar.xz.part\";
       mv \"$TARGET/.$DATE.tar.xz.part\" \"$TARGET/$DATE.tar.xz\";
@@ -28,7 +29,7 @@ function backup {
     sed 's/^\(.*\)$/rm \1;/')"
 
   lftp -c "
-    open -p 2222 -u \"$SFTP_USER,\" \"sftp://$SFTP_SERVER\";
+    open -p $SFTP_PORT -u \"$SFTP_USER,\" \"sftp://$SFTP_HOST\";
     $COMMANDS
   "
 }
@@ -49,7 +50,7 @@ function restore {
   fi
 
   local LATEST=$(lftp -c "
-    open -p 2222 -u \"$SFTP_USER,\" \"sftp://$SFTP_SERVER\";
+    open -p $SFTP_PORT -u \"$SFTP_USER,\" \"sftp://$SFTP_HOST\";
     cls -1 --sort=name \"$SOURCE\"
   " | tail -n "1")
 
@@ -61,7 +62,7 @@ function restore {
   local LATEST_FILENAME="$(basename -- "$LATEST")"
 
   lftp -c "
-    open -p 2222 -u \"$SFTP_USER,\" \"sftp://$SFTP_SERVER\";
+    open -p $SFTP_PORT -u \"$SFTP_USER,\" \"sftp://$SFTP_HOST\";
     get \"$LATEST\" -o \"$VOLUMES/$VOLUME-$LATEST_FILENAME\";
   "
 
