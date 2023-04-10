@@ -46,7 +46,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Generate image name
         id: imagename
-        run: echo imagename="nikarh/fileserver-$(basename ${{ matrix.context }})" >> $GITHUB_OUTPUT
+        run: echo imagename="nikarh/$(basename ${{ matrix.context }})" >> $GITHUB_OUTPUT
       - name: Docker meta
         uses: docker/metadata-action@v4
         id: meta
