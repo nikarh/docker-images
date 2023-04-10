@@ -46,12 +46,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Generate image name
         id: imagename
-        run: echo imagename="$(basename ${{ matrix.context }})" >> $GITHUB_OUTPUT
+        run: echo imagename="nikarh/fileserver-$(basename ${{ matrix.context }})" >> $GITHUB_OUTPUT
       - name: Docker meta
         uses: docker/metadata-action@v4
         id: meta
         with:
-          images: nikarh/fileserver-${{ steps.imagename.outputs.imagename }}
+          images: ${{ steps.imagename.outputs.imagename }}
           tags: |
             # set latest tag for default branch
             type=raw,value=latest,enable={{is_default_branch}}
@@ -62,3 +62,10 @@ jobs:
           context: ${{ matrix.context }}
           tags: ${{ steps.meta.outputs.tags }}
           push: true
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: ${{ steps.imagename.outputs.imagename }}
+          readme-filepath: ${{ matrix.context }}/README.md
