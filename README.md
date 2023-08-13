@@ -11,8 +11,8 @@ Images target the following platforms:
 
 ## Images
 
-- [nikarh/fileserver-imapsync](imapsync/README.md)
-- [nikarh/fileserver-rclone](rclone/README.md)
-- [nikarh/fileserver-samba](samba/README.md)
-- [nikarh/fileserver-sftpd-backup](sftpd-backup/README.md)
+- [nikarh/fileserver-imapsync](fileserver-imapsync/README.md)
+- [nikarh/fileserver-rclone](fileserver-rclone/README.md)
+- [nikarh/fileserver-samba](fileserver-samba/README.md)
+- [nikarh/fileserver-sftpd-backup](fileserver-sftpd-backup/README.md)
 - [nikarh/mediafire-bulk-downloader](mediafire-bulk-downloader/README.md)
