@@ -44,21 +44,23 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Generate image name
-        id: imagename
-        run: echo imagename="nikarh/$(basename ${{ matrix.context }})" >> $GITHUB_OUTPUT
+      - name: Generate image name and platforms
+        id: envs
+        run: |
+          echo imagename="nikarh/$(basename ${{ matrix.context }})" >> $GITHUB_OUTPUT;
+          echo platforms="$(cat "${{ matrix.context }}/.platforms" 2>/dev/null || echo linux/amd64,linux/arm64,linux/arm/v7)" >> $GITHUB_OUTPUT;
       - name: Docker meta
         uses: docker/metadata-action@v4
         id: meta
         with:
-          images: ${{ steps.imagename.outputs.imagename }}
+          images: ${{ steps.envs.outputs.imagename }}
           tags: |
             # set latest tag for default branch
             type=raw,value=latest,enable={{is_default_branch}}
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: ${{ steps.envs.outputs.platforms }}
           context: ${{ matrix.context }}
           tags: ${{ steps.meta.outputs.tags }}
           push: true
@@ -67,5 +69,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: ${{ steps.imagename.outputs.imagename }}
+          repository: ${{ steps.envs.outputs.imagename }}
           readme-filepath: ${{ matrix.context }}/README.md
