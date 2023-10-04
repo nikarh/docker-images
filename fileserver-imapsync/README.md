@@ -1,8 +1,12 @@
-# nikarh/fileserver-imapsync
+# [nikarh/fileserver-imapsync](https://github.com/nikarh/docker-images/tree/main/fileserver-imapsync)
 
-This is `alpine` with `imapnotify` and `mbsync`, configured specifically to backup emails from Gmail using OAUTH2.
+[![GitHub](https://img.shields.io/github/license/nikarh/docker-images)](https://github.com/nikarh/docker-images)
+[![GitHub Repo stars](https://img.shields.io/github/stars/nikarh/docker-images)](https://github.com/nikarh/docker-images)
+[![Docker Image Version (latest semver)](https://img.shields.io/docker/v/nikarh/fileserver-imapsync)](https://hub.docker.com/r/nikarh/fileserver-imapsync)
 
-## Usage
+An `alpine` image with `imapnotify` and `mbsync`, configured specifically to backup emails from Gmail using OAUTH2.
+
+## 🏗️ Usage
 
 `imap.env`
 ```yaml
@@ -24,7 +28,7 @@ services:
     user: 1000:1000
     environment:
       # Mail will be synced to /home/${USERNAME}/mail
-      # This is useful if the volume is also used with dovecot and multiple user mailboxes
+      # Useful if the volume is also used with dovecot and multiple user mailboxes
       USERNAME: test
     volumes:
       - mail-data:/home
@@ -32,3 +36,8 @@ services:
       - IMAP_AUTH
 
 ```
+
+## ⚠️ Automated build
+
+This docker image is rebuilt automatically weekly with latest alpine base image and latest dependencies. This can lead to broken images in case the packages installed are not backward compatible in their configs or behavior.
+
