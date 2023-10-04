@@ -30,7 +30,7 @@ jobs:
     needs:
       - dockerfile-matrix
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         context: ${{ fromJSON(needs.dockerfile-matrix.outputs.contexts) }}
     steps:
