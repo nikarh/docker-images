@@ -1,4 +1,4 @@
-FROM rust:alpine AS builder
+FROM rust:1.79-alpine AS builder
 
 RUN apk add --no-cache musl-dev git
 RUN git clone https://github.com/libreddit/libreddit /libreddit \
