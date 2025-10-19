@@ -20,3 +20,4 @@ Images target the following platforms:
 - [nikarh/fileserver-samba](fileserver-samba/README.md)
 - [nikarh/fileserver-sftpd-backup](fileserver-sftpd-backup/README.md)
 - [nikarh/mediafire-bulk-downloader](mediafire-bulk-downloader/README.md)
+- [nikarh/a9-cam-reverse](a9-cam-reverse/README.md)
