@@ -1,0 +1,31 @@
+diff --git a/addon/Dockerfile.standalone.base b/addon/Dockerfile.standalone.base
+index 2f56e3d..8396343 100644
+--- a/addon/Dockerfile.standalone.base
++++ b/addon/Dockerfile.standalone.base
+@@ -1,4 +1,4 @@
+-FROM thespaghettidetective/ml_api_base:1.3
++FROM thespaghettidetective/ml_api_base:1.4
+ WORKDIR /app
+ EXPOSE 3333
+ 
+@@ -13,4 +13,4 @@ RUN wget -O model/model-weights.onnx $(cat model/model-weights.onnx.url | tr -d
+ 
+ ENV FLASK_APP server.py
+ 
+-CMD gunicorn --bind "0.0.0.0:3333" --workers 1 wsgi
+\ No newline at end of file
++CMD gunicorn --bind "0.0.0.0:3333" --workers 1 wsgi
+diff --git a/addon/rootfs/app/server.py b/addon/rootfs/app/server.py
+index 166928d..19210c1 100644
+--- a/addon/rootfs/app/server.py
++++ b/addon/rootfs/app/server.py
+@@ -30,7 +30,7 @@ net_main = load_net(path.join(model_dir, 'model.cfg'), path.join(model_dir, 'mod
+ def get_p():
+     if 'img' in request.args:
+         try:
+-            resp = requests.get(request.args['img'], stream=True, timeout=(0.1, 5))
++            resp = requests.get(request.args['img'], stream=True, timeout=(1, 5))
+             resp.raise_for_status()
+             img_array = np.array(bytearray(resp.content), dtype=np.uint8)
+             img = cv2.imdecode(img_array, -1)
+
