@@ -1,15 +1,21 @@
-{
-  "host": "imap.gmail.com",
-  "hostCmd": "",
-  "port": 993,
-  "tls": true,
-  "tlsOptions": {
-    "rejectUnauthorized": true
-  },
-  "usernameCmd": "/auth.sh username",
-  "passwordCmd": "/auth.sh password",
-  "xoauth2": true,
-  "onNewMail": "mbsync -LV -c /mbsync.conf gmail",
-  "wait": 10,
-  "boxes": [ "INBOX" ]
-}
+configurations:
+  - host: imap.gmail.com
+    port: 993
+    tls: true
+    tlsOptions:
+      rejectUnauthorized: true
+      starttls: false
+
+    # Use the *CMD fields (new format) for dynamic credentials
+    usernameCMD: "/auth.sh username"
+    passwordCMD: "/auth.sh password"
+
+    # XOAUTH2 expects the token to come from passwordCMD
+    xoAuth2: true
+
+    wait: 10
+
+    boxes:
+      - mailbox: INBOX
+        onNewMail: "mbsync -LV -c /mbsync.conf gmail"
+        onNewMailPost: SKIP
