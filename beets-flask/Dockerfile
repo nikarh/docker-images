@@ -18,6 +18,13 @@ RUN uv pip install --python /venv/bin/python --no-cache \
         "beets[chroma,discogs,fetchart,lyrics]==${BEETS_VERSION}" \
         "beets-filetote==1.3.7"
 
+# The default polars runtime needs AVX2 and friends and dies with SIGILL on
+# older CPUs. The compat runtime works everywhere and polars prefers it when
+# installed; it must match the polars version exactly.
+RUN POLARS_VERSION=$(/venv/bin/python -c 'import importlib.metadata as m; print(m.version("polars"))') \
+    && uv pip install --python /venv/bin/python --no-cache "polars-runtime-compat==${POLARS_VERSION}" \
+    && uv pip uninstall --python /venv/bin/python polars-runtime-32
+
 # The upstream entrypoint starts as root, fixes permissions, pip-installs
 # requirements and drops to uid 1000. Here everything is baked in, so its
 # unprivileged part is used directly. Redis is kept in memory only, and the
