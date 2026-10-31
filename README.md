@@ -20,6 +20,7 @@ Images target the following platforms:
 - [nikarh/fileserver-samba](fileserver-samba/README.md)
 - [nikarh/mediafire-bulk-downloader](mediafire-bulk-downloader/README.md)
 - [nikarh/a9-cam-reverse](a9-cam-reverse/README.md)
+- [nikarh/beets-flask](beets-flask/README.md)
 - [nikarh/ha_bambu_lab_p1_spaghetti_detection_standalone](ha_bambu_lab_p1_spaghetti_detection_standalone/README.md)
 
 ## License
