@@ -1,6 +1,7 @@
 #!/bin/sh
 
-echo "$(sed 's/${USERNAME}/'"$USERNAME"'/g' /mbsync.conf)" > /mbsync.conf
+# The root filesystem may be read-only, so the rendered config lives in /tmp
+sed 's/${USERNAME}/'"$USERNAME"'/g' /mbsync.conf > /tmp/mbsync.conf
 
-mbsync -LV -c /mbsync.conf gmail
-goimapnotify -log-level debug -conf /imapnotify.yaml
+mbsync -LV -c /tmp/mbsync.conf gmail
+exec goimapnotify -log-level debug -conf /imapnotify.yaml

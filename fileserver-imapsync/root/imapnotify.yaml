@@ -17,5 +17,5 @@ configurations:
 
     boxes:
       - mailbox: INBOX
-        onNewMail: "mbsync -LV -c /mbsync.conf gmail"
+        onNewMail: "mbsync -LV -c /tmp/mbsync.conf gmail"
         onNewMailPost: SKIP
