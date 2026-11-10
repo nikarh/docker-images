@@ -13,6 +13,30 @@
 | `/config/beets` | config and library database (volume), owned by 1000 |
 | `/tmp` | home directory, caches (tmpfs) |
 
+## Secrets from files
+
+beets merges the YAML files listed under `include` into its config (only in
+`$BEETSDIR/config.yaml`, not in a file given with `-c`). Keep plugin credentials in a secret
+and include it: they stay in beets' config, out of the environment, `docker inspect` and
+the container list.
+
+```yaml
+# config.yaml
+include:
+  - /run/secrets/beets.yaml
+```
+
+```yaml
+# the secret mounted at /run/secrets/beets.yaml
+discogs:
+  user_token: ...
+fetchart:
+  fanarttv_key: ...
+  lastfm_key: ...
+acoustid:
+  apikey: ...
+```
+
 The default command only keeps the container running (`docker exec <container> beet ...`); set
 your own, e.g. an inbox watcher.
 

@@ -15,6 +15,33 @@ index 2f56e3d..8396343 100644
 -CMD gunicorn --bind "0.0.0.0:3333" --workers 1 wsgi
 \ No newline at end of file
 +CMD gunicorn --bind "0.0.0.0:3333" --workers 1 wsgi
+diff --git a/addon/rootfs/app/auth.py b/addon/rootfs/app/auth.py
+index e463d0d..e2b70e6 100644
+--- a/addon/rootfs/app/auth.py
++++ b/addon/rootfs/app/auth.py
+@@ -2,7 +2,21 @@ import os
+ from functools import wraps
+ from flask import Flask, request, Response
+ 
+-ML_API_TOKEN=os.environ.get("ML_API_TOKEN")
++def read_token():
++    # ML_API_TOKEN_FILE: the token from a file (a docker secret), so it isn't in the
++    # environment. Fails at startup rather than serving without auth when it can't be used.
++    path = os.environ.get("ML_API_TOKEN_FILE")
++    if not path:
++        return os.environ.get("ML_API_TOKEN")
++    if os.environ.get("ML_API_TOKEN"):
++        raise RuntimeError("both ML_API_TOKEN and ML_API_TOKEN_FILE are set")
++    with open(path) as f:
++        token = f.read().strip()
++    if not token:
++        raise RuntimeError("ML_API_TOKEN_FILE {} is empty".format(path))
++    return token
++
++ML_API_TOKEN=read_token()
+ 
+ def token_required(f):
+     @wraps(f)
 diff --git a/addon/rootfs/app/server.py b/addon/rootfs/app/server.py
 index 166928d..19210c1 100644
 --- a/addon/rootfs/app/server.py
@@ -28,4 +55,3 @@ index 166928d..19210c1 100644
              resp.raise_for_status()
              img_array = np.array(bytearray(resp.content), dtype=np.uint8)
              img = cv2.imdecode(img_array, -1)
-

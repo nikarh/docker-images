@@ -12,6 +12,7 @@ This image is based on the upstream `Dockerfile.standalone.base` but includes a 
 
 - **Increased connection timeout**: Changed read timeout from `0.1s` to `1s` to prevent TLS handshake failures when Home Assistant is running on different hardware than this ML server
 - **Updated base image**: Bumped from `thespaghettidetective/ml_api_base:1.3` to `1.4`
+- **Token from a file**: the server reads `ML_API_TOKEN_FILE` itself (see below)
 
 ## 🏗️ Usage
 
@@ -47,7 +48,27 @@ services:
 | Environment Variable | Description | Default |
 |---------------------|-------------|---------|
 | `ML_API_TOKEN` | Authentication token for API access | `obico_api_secret` |
+| `ML_API_TOKEN_FILE` | Path to a file with the token, instead of `ML_API_TOKEN` (not both) | |
 | `TZ` | Timezone | `UTC` |
+
+### Token from a file
+
+The server reads the token from `ML_API_TOKEN_FILE` (a docker secret), so it's neither in the
+environment nor in `docker inspect`. If the file is missing, unreadable or empty, or
+`ML_API_TOKEN` is set too, the server fails to start instead of serving without a token.
+
+```yaml
+services:
+  bambu-spaghetti-detection:
+    image: nikarh/ha_bambu_lab_p1_spaghetti_detection_standalone:latest
+    environment:
+      - ML_API_TOKEN_FILE=/run/secrets/ml_api_token
+    secrets:
+      - ml_api_token
+secrets:
+  ml_api_token:
+    file: ./secrets/ml_api_token
+```
 
 ## 📡 Integration
 
