@@ -22,7 +22,8 @@ Images target the following platforms:
 - [nikarh/a9-cam-reverse](a9-cam-reverse/README.md)
 - [nikarh/beets-flask](beets-flask/README.md)
 - [nikarh/ha_bambu_lab_p1_spaghetti_detection_standalone](ha_bambu_lab_p1_spaghetti_detection_standalone/README.md)
+- [nikarh/bazarr-plus](bazarr-plus/README.md)
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE), except for the `ha_bambu_lab_p1_spaghetti_detection_standalone` component, which is licensed under the [GNU General Public License v3.0](ha_bambu_lab_p1_spaghetti_detection_standalone/LICENSE).
+This project is licensed under the [MIT License](LICENSE), except for the `ha_bambu_lab_p1_spaghetti_detection_standalone` component, which is licensed under the [GNU General Public License v3.0](ha_bambu_lab_p1_spaghetti_detection_standalone/LICENSE), and the software the `bazarr-plus` image builds ([Bazarr+](https://github.com/LavX/bazarr), GPLv3).
